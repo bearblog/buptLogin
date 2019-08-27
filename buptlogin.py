@@ -30,23 +30,44 @@ def login(data):
     return response
 
 
-if __name__ == "__main__":
+def logout(url):
+    requests.get(url)
 
-    url = 'http://ngw.bupt.edu.cn/login'
-    data = {
-        'user': "学号",
-        'pass': "登录密码",
-        'line': ""
-    }
-    while True:
-        userid = input("学号：")
-        password = input("密码：")
-        data["user"] = userid
-        data["pass"] = password
-        response = login(data)
-        match = re.search('登录成功', response)
-        if match:
-            print("登录成功")
-            break
-        else:
-            print("登录失败")
+
+if __name__ == "__main__":
+    url = 'http://ngw.bupt.edu.cn/index'
+    result = requests.get(url=url)
+    response = result.content.decode("utf-8")
+    match = re.search('登录成功', response)
+    # print(response)
+    if match:
+        confirm_msg = input("Logout confirmed?(yes/no)")
+        while True:
+            if confirm_msg == "yes":
+                url = "http://ngw.bupt.edu.cn/logout"
+                logout(url)
+                break
+            elif confirm_msg == "no":
+                break
+            else:
+                confirm_msg = input("Logout confirmed?(yes/no)")
+    else:
+        url = 'http://ngw.bupt.edu.cn/login'
+        data = {
+            'user': "学号",
+            'pass': "登录密码",
+            'line': ""
+        }
+        while True:
+            print("请输入你的学号和密码")
+            userid = input("学号：")
+            password = input("密码：")
+            data["user"] = userid
+            data["pass"] = password
+            response = login(data)
+            match = re.search('登录成功', response)
+            if match:
+                print("登录成功")
+                break
+            else:
+                print("登录失败")
