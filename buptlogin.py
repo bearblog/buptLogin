@@ -35,7 +35,7 @@ def logout(url):
 
 
 if __name__ == "__main__":
-    url = 'http://ngw.bupt.edu.cn/index'
+    url = 'http://10.3.8.211/index'
     result = requests.get(url=url)
     response = result.content.decode("utf-8")
     match = re.search('登录成功', response)
@@ -44,7 +44,7 @@ if __name__ == "__main__":
         confirm_msg = input("Logout confirmed?(yes/no)")
         while True:
             if confirm_msg == "yes":
-                url = "http://ngw.bupt.edu.cn/logout"
+                url = "http://10.3.8.211/logout"
                 logout(url)
                 break
             elif confirm_msg == "no":
@@ -52,7 +52,7 @@ if __name__ == "__main__":
             else:
                 confirm_msg = input("Logout confirmed?(yes/no)")
     else:
-        url = 'http://ngw.bupt.edu.cn/login'
+        url = 'http://10.3.8.211/login'
         data = {
             'user': "学号",
             'pass': "登录密码",
